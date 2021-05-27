@@ -23,6 +23,7 @@
               v-for="(link, index) in links"
               :to="link.path"
               :key="index"
+              v-bind:class="{ selected: index === 0 }"
             >
               {{ link.name }}
             </router-link>
@@ -116,6 +117,10 @@ export default {
     position: relative;
     z-index: 0;
     cursor: pointer;
+    &.selected {
+      background-color: white;
+      color: black;
+    }
     &:hover {
       color: black;
     }
@@ -128,7 +133,7 @@ export default {
       content: "";
       background-color: #fff;
       transition: all 0.3s;
-      z-index: -10;
+      z-index: -1;
     }
     &:hover:before {
       width: 100%;

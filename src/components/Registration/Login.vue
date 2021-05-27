@@ -1,5 +1,11 @@
 <template>
   <form @submit.prevent="login">
+    <p v-if="errors.length">
+              <b>Please correct the following error(s):</b>
+              <ul>
+                <li class="error__item" v-for="error in errors" :key="error.index">{{ error }}</li>
+              </ul>
+            </p>
       <input v-model="username" type="text" placeholder="Username">
       <input v-model="password" type="password" placeholder="Password">
       <button>login</button>
@@ -7,25 +13,35 @@
 </template>
 
 <script>
-
 export default {
-  name: 'Login',
+  name: "Login",
   data: () => ({
-    username: '',
-    password: '',
-    error: false
+    username: "",
+    password: "",
+    errors: [],
   }),
   methods: {
-  login() {
-      this.$store.dispatch("loginUser", {
-        username: this.username,
-        password: this.password
-      })
-    }
-  }
-}
+    login() {
+      this.errors = [];
+
+      if (!this.username) {
+        this.errors.push("Username required.");
+      }
+
+      if (!this.password) {
+        this.errors.push("Password required.");
+      }
+
+      if (!this.errors.length) {
+        this.$store.dispatch("loginUser", {
+          username: this.username,
+          password: this.password,
+        });
+      }
+    },
+  },
+};
 </script>
 
 <style>
-
 </style>

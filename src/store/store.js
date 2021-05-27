@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
+import router from "../router";
 
 axios.defaults.baseURL = "http://localhost:8080/";
 
@@ -60,6 +61,7 @@ export const store = new Vuex.Store({
       console.log(user);
       let users = state.users;
       users.push(user);
+      console.log(users);
     },
   },
 
@@ -68,14 +70,18 @@ export const store = new Vuex.Store({
       const { username, password } = payload;
       let users = getters.getUsers;
 
+      //check if user is valid
       const checkUsers = (userName) =>
         users.find((user) => {
-          return user.name === userName;
+          if (user.name === userName) {
+            router.push("/registederuser");
+          }
+          return;
         });
 
       // check if user is admin
       if (username === "vue-admin") {
-        console.log("admin");
+        router.push("/pharmacyadmin");
       } else {
         // check if user is valid
         console.log("****************");
@@ -88,11 +94,7 @@ export const store = new Vuex.Store({
         password,
       };
 
-      users.push(newUser);
+      console.log(newUser);
     },
-
-    // checkIfAdmin({getters}, payload) {
-
-    // }
   },
 });
