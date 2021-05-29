@@ -85,7 +85,7 @@ export default {
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 630px; /* Height of the footer */
+  height: 14%; /* Height of the footer */
   background: #212121;
   .footerWrapper {
     display: flex;

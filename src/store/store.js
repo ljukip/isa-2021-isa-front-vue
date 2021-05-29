@@ -53,6 +53,10 @@ export const store = new Vuex.Store({
     getUsers(state) {
       return state.users;
     },
+    getSingleUser: (state) => (id) => {
+      console.log(state.users.find((item) => item.userID === id));
+      return state.users.find((item) => item.userID === id);
+    },
   },
 
   mutations: {
@@ -67,14 +71,18 @@ export const store = new Vuex.Store({
 
   actions: {
     loginUser({ getters }, payload) {
-      const { username, password } = payload;
+      const { username } = payload;
       let users = getters.getUsers;
 
       //check if user is valid
       const checkUsers = (userName) =>
         users.find((user) => {
           if (user.name === userName) {
-            router.push("/registederuser");
+            const { userID } = user;
+
+            router.push({
+              path: `/registederuser/${userID}`,
+            });
           }
           return;
         });
@@ -83,18 +91,8 @@ export const store = new Vuex.Store({
       if (username === "vue-admin") {
         router.push("/pharmacyadmin");
       } else {
-        // check if user is valid
-        console.log("****************");
-        console.log(checkUsers(username));
-        console.log("****************");
+        checkUsers(username);
       }
-
-      const newUser = {
-        username,
-        password,
-      };
-
-      console.log(newUser);
     },
   },
 });
