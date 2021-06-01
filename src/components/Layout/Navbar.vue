@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <header>
     <div class="aboveHeader">
       <div class="welcome">
         <p>Welcome To Our Medical & Research Center</p>
@@ -31,7 +31,7 @@
         </div>
       </div>
     </nav>
-  </div>
+  </header>
 </template>
 
 <script>

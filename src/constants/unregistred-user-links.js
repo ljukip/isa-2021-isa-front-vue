@@ -23,4 +23,12 @@ export default [
     path: "/signup",
     name: "signup",
   },
+  {
+    path: "/registederuser/2",
+    name: "user-profile",
+  },
+  {
+    path: "/pharmacyadmin",
+    name: "admin-profile",
+  },
 ];

@@ -1,22 +1,24 @@
 <template>
 
-      <form class="form__box" @submit.prevent="signIn">
-        <p v-if="errors.length">
+      <form  class="form form-signup" @submit.prevent="signIn">
+            <p v-if="errors.length">
               <b>Please correct the following error(s):</b>
               <ul>
                 <li class="error__item" v-for="error in errors" :key="error.index">{{ error }}</li>
               </ul>
             </p>
-            <input v-model="name" type="text" placeholder="Name">
-            <input v-model="email" type="email" placeholder="Email">
-            <input v-model="adress" type="text" placeholder="Adress">
-            <input v-model="city" type="text" placeholder="City">
-            <input v-model="country" type="text" placeholder="Country">
-            <input v-model="number" type="text" placeholder="Phone Number">
-            <input v-model="password" type="password" placeholder="Password">
-            <input v-model="password" type="password" placeholder="Password">
 
-          <button class="btn" type="submit">Sign Up</button>
+            <h1>Sing up</h1>
+            <div class="input-wrapper"><i class="fas fa fa-user"></i><input class="form__input" v-model="name" type="text" placeholder="Name"></div>
+            <div class="input-wrapper"><i class="fas fa fa-envelope"></i><input class="form__input" v-model="email" type="email" placeholder="Email"></div>
+            <div class="input-wrapper"><i class="fas fa fa-map-marker-alt"></i><input class="form__input" v-model="adress" type="text" placeholder="Adress"></div>
+            <div class="input-wrapper"><i class="fas fa fa-building"></i><input class="form__input" v-model="city" type="text" placeholder="City"></div>
+            <div class="input-wrapper"><i class="fas fa fa-flag"></i><input class="form__input" v-model="country" type="text" placeholder="Country"></div>
+            <div class="input-wrapper"><i class="fas fa fa-phone"></i><input class="form__input" v-model="number" type="text" placeholder="Phone Number"></div>
+            <div class="input-wrapper"><i class="fas fa fa-key"></i><input class="form__input" v-model="password" type="password" placeholder="Password"></div>
+            <div class="input-wrapper"><i class="fas fa fa-key"></i><input class="form__input" v-model="password" type="password" placeholder="Password retype"></div>
+
+          <button class="form__btn" type="submit">Sign Up</button>
       </form>
 
 </template>
@@ -82,15 +84,33 @@ export default {
 };
 </script>
 
-<style>
-.form__box {
+<style lang="scss">
+.form {
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-}
+  width: 400px;
 
-.form__box input {
-  margin-bottom: 1rem;
+  &__input {
+    width: 300px;
+    height: 35px;
+    margin-bottom: 0.4rem;
+    padding: 0.2rem;
+    outline: none;
+    border: none;
+  }
+
+  &__btn {
+    background-color: rgb(51, 142, 35);
+    padding: 0.2rem;
+    outline: none;
+    border: none;
+    width: 100px;
+    height: 30px;
+    color: #fff;
+    text-transform: capitalize;
+  }
 }
 
 .error__item {

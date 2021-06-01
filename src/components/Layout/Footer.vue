@@ -1,7 +1,7 @@
 <template>
-  <footer class="footer">
+  <footer class="footer row">
     <div class="footerWrapper">
-      <div class="footerLeftSide">
+      <div class="footerLeftSide col-sm-6">
         <div class="logo-box">
           <img src="../../assets/images/logo-pharmacy.png" class="nav__logo" />
         </div>
@@ -25,8 +25,8 @@
           <button class="subscribeBtn">SUBSCRIBE</button>
         </div>
       </div>
-      <div class="footerRightSide">
-        <div class="tweets">
+      <div class="footerRightSide col-sm-6">
+        <div class="tweets col-sm-6">
           <p class="latestTweets">LATEST TWEETS</p>
           <div class="oneTweet">
             <span class="tweet">@medical</span>
@@ -53,7 +53,7 @@
             <div class="tweetDate">- Thursday March 9, 2017</div>
           </div>
         </div>
-        <div class="info">
+        <div class="info col-sm-6">
           <p class="patientGuide">PATIENT GUIDE</p>
           <div class="infoLinks">
             <a href="#">Choosing a doctor</a>
@@ -82,10 +82,7 @@ export default {
 
 <style lang="scss">
 .footer {
-  position: absolute;
-  bottom: 0;
   width: 100%;
-  height: 14%; /* Height of the footer */
   background: #212121;
   .footerWrapper {
     display: flex;

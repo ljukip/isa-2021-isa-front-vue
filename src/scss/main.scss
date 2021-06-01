@@ -1,4 +1,4 @@
-// @import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap");
 
 * {
   margin: 0;
@@ -9,9 +9,160 @@
 
 body {
   font-family: "Lato", sans-serif;
-  background-color: #219ca5;
+  // background-color: #219ca5;
+  background-color: #fff;
 }
 
 // Colors
 $color-primary: #219ca5;
 $color-secondary: #21a537;
+
+header {
+  background-color: #219ca5;
+  margin-bottom: 50px;
+}
+#app > div {
+  min-height: 50vh;
+}
+
+#app > .login-form,
+#app > .form-signup,
+#app > .patient {
+  min-height: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f1f1f1;
+  margin-bottom: 50px;
+  border-top-right-radius: 2%;
+  border-bottom-right-radius: 2%;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  border-left: 15px solid #219ca5;
+}
+
+#app > .login-form h1,
+#app > .form-signup h1 #app > .patient h1 {
+  margin-bottom: 50px;
+  font-family: "Lato", sans-serif;
+  text-transform: uppercase;
+  font-size: 35px;
+}
+#app > .login-form input,
+#app > .form-signup input {
+  border-radius: 5px;
+  margin-bottom: 15px;
+  padding-left: 15px;
+}
+
+#app > .login-form .form__btn,
+#app > .form-signup .form__btn {
+  border-radius: 5px;
+  margin-top: 35px;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  padding: 10px 20px 10px 20px !important;
+  width: auto;
+  height: auto;
+  cursor: pointer;
+  background-color: #219ca5;
+}
+
+#app > .login-form .form__btn:hover,
+#app > .form-signup .form__btn:hover {
+  background-color: #ffa500;
+}
+
+.input-wrapper i {
+  margin-right: 10px;
+}
+.welcome p {
+  color: #fff;
+  vertical-align: middle;
+  margin: 0;
+}
+
+.nav__logo {
+  padding-top: 0;
+}
+
+ul.nav__list {
+  margin-top: 1rem;
+}
+
+.patient h1 {
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 50px;
+}
+.section-1 {
+  text-align: left;
+}
+.section-1 div:nth-child(1) {
+  margin-bottom: 25px;
+}
+.section-1 div {
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: 600;
+}
+.section-1 div > i {
+  margin-right: 15px;
+  font-weight: 600;
+}
+.section-1 div > i:nth-child(2) {
+  text-decoration: none;
+  font-style: normal;
+  font-weight: 400;
+}
+.section-1 img {
+  border-radius: 2%;
+}
+.section-1 .btn {
+  align-self: center;
+  margin-top: 25px;
+  width: 100%;
+  font-size: 16px;
+  text-transform: uppercase;
+}
+.section-2 .list-tab {
+  background-color: #ffffff;
+  border-radius: 2%;
+  margin-bottom: 25px;
+  padding: 25px;
+  text-align: left;
+}
+.section-2 .list-tab h2 {
+  text-align: center;
+  font-size: 21px;
+}
+
+.section-2 .list-table,
+.section-2 .list-table-medicine {
+  width: 100%;
+  margin-top: 25px;
+}
+.section-2 .list-table th,
+.section-2 .list-table-medicine th {
+  text-transform: uppercase;
+}
+.section-2 .list-table th:nth-child(3),
+.section-2 .list-table td:nth-child(3),
+.section-2 .list-table-medicine th:nth-child(2),
+.section-2 .list-table-medicine td:nth-child(2) {
+  text-align: right;
+}
+.section-2 .list-table td:nth-child(3) .btn:nth-child(1) {
+  margin-right: 10px;
+}
+.section-2 .list-table tr,
+.section-2 .list-table-medicine tr {
+  height: 50px;
+}
+
+.list-tab .spec-info-time {
+  float: right;
+  color: #21a537;
+  font-weight: 600;
+  font-style: normal;
+}
