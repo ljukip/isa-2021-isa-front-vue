@@ -42,7 +42,9 @@ header {
 }
 
 #app > .login-form h1,
-#app > .form-signup h1 #app > .patient h1 {
+#app > .form-signup h1,
+#app > .patient h1,
+#app > .admin-contol-panel h1 {
   margin-bottom: 50px;
   font-family: "Lato", sans-serif;
   text-transform: uppercase;
@@ -106,7 +108,8 @@ ul.nav__list {
   font-size: 18px;
   font-weight: 600;
 }
-.section-1 div > i {
+.section-1 div > i,
+.admin-control-panel .container nav i {
   margin-right: 15px;
   font-weight: 600;
 }
@@ -165,4 +168,95 @@ ul.nav__list {
   color: #21a537;
   font-weight: 600;
   font-style: normal;
+}
+
+.admin-control-panel .container {
+  background-color: #ffffff;
+  border-top: 1px solid #dee2e6;
+  border-right: 1px solid #dee2e6;
+  border-bottom: 1px solid #dee2e6;
+  border-left: 15px solid #219ca5;
+  margin-bottom: 50px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  padding-left: 0;
+  padding-right: 0;
+}
+.admin-control-panel .container nav {
+  padding: 0;
+}
+
+.admin-control-panel .container nav a {
+  color: #219ca5;
+}
+
+.admin-content-wrapper .tab-content {
+  padding-top: 25px;
+}
+.admin-content-wrapper .tab-content h2 {
+  font-size: 21px;
+  margin-bottom: 50px;
+}
+.admin-content-wrapper .tab-content h2 i {
+  margin-right: 15px;
+}
+.admin-content-wrapper .list-table tr {
+  border: 1px solid #dee2e6;
+}
+.admin-content-wrapper .list-table th {
+  font-size: 14px;
+  text-transform: uppercase;
+  border-right: 1px solid #dee2e6;
+}
+.admin-content-wrapper .list-table td {
+  border-right: 1px solid #dee2e6;
+  font-size: 14px;
+  text-align: left;
+  padding-left: 5px;
+}
+.admin-content-wrapper .list-table td:nth-child(8) {
+  text-transform: capitalize;
+}
+.admin-content-wrapper .list-table td:nth-child(3) {
+  text-transform: uppercase;
+  font-weight: 800;
+}
+.admin-content-wrapper .list-table td button {
+  padding: 5px;
+  font-size: 14px;
+  margin: 10px;
+}
+.admin-content-wrapper .list-table td > i {
+  color: red;
+}
+.admin-content-wrapper .tab-content .card {
+  padding: 25px 5px;
+  margin-bottom: 50px;
+}
+.admin-content-wrapper .tab-content .card h3 {
+  text-transform: uppercase;
+  font-size: 21px;
+}
+.admin-content-wrapper .tab-content .card form {
+  flex-wrap: wrap;
+}
+.admin-content-wrapper .tab-content .card input,
+.admin-content-wrapper .tab-content .card select {
+  width: 150px;
+  font-size: 14px;
+  height: 35px;
+  border: 1px solid #dee2e6;
+  flex: 1 0 21%;
+  margin: 10px;
+  padding-left: 15px;
+}
+
+.admin-content-wrapper .tab-content .card button {
+  width: 250px;
+  font-size: 14px;
+  height: 35px;
+  border: 1px solid #dee2e6;
+  margin: 10px;
 }

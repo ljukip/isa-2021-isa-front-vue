@@ -42,7 +42,7 @@ export default new Router({
       component: PharmacyAdmin,
     },
     {
-      path: "/registederuser",
+      path: "/registederuser/:id",
       component: RegistederUser,
     },
   ],

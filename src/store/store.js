@@ -16,10 +16,10 @@ export const store = new Vuex.Store({
       { id: "4", name: "apoteka 4", location: "kragujevac" },
     ],
     medications: [
-      { id: "1", name: "medication 1", location: "uzice" },
-      { id: "2", name: "medication 2", location: "beaograd" },
-      { id: "3", name: "medication 3", location: "cacak" },
-      { id: "4", name: "medication 4", location: "kragujevac" },
+      { id: "1553423423", name: "besedin 5mg", location: "uzice", type: 'antidepresiv', contains: '2mg bromazepam', contraindications: 'suicidne misli', dailyDoes: '2 x 5mg dnevno', substitue: '1mg ksalol' },
+      { id: "2121512323", name: "brufen 200mg", location: "beaograd", type: 'anelgetik', contains: '200mg ibruprofen', contraindications: 'mucnina', dailyDoes: '3 x 400mg dnevno', substitue: '1mg panadol' },
+      { id: "3517976564", name: "diklofen 50mg", location: "cacak", type: 'anelgetik', contains: '10mg diklofen', contraindications: 'malaksalost', dailyDoes: '2 x 2  dnevno', substitue: '1mg diklofenak duo' },
+      { id: "4232215512", name: "probiotik forte", location: "kragujevac", type: 'probiotik', contains: '1mg probiotik + bulardi', contraindications: '', dailyDoes: '1 x dnevno', substitue: '1mg linex' },
     ],
     users: [
       {
