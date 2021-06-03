@@ -1,7 +1,16 @@
 <template>
   <div class="admin-control-panel">
+    <section
+      class="modal"
+      v-for="(data, index) in singleMedication"
+      :key="index"
+    >
+      <h2>{{ data }}</h2>
+    </section>
+
     <div class="container flex-column">
       <h1>Admin Panel</h1>
+
       <nav class="flex-row col-12">
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
           <a
@@ -66,6 +75,7 @@
           >
         </div>
       </nav>
+
       <div class="admin-content-wrapper flex-row col-12">
         <div class="tab-content" id="nav-tabContent">
           <div
@@ -166,9 +176,15 @@
                   <td>{{ item.substitue }}</td>
                   <td>{{ item.location }}</td>
                   <td>
-                    <button class="btn btn-info">
+                    <button
+                      @click="updateMedication(item.id)"
+                      class="btn btn-info"
+                    >
                       <i class="fas fa-edit"></i></button
-                    ><button class="btn btn-danger">
+                    ><button
+                      @click="removeMedication(item.id)"
+                      class="btn btn-danger"
+                    >
                       <i class="fa fa-ban"></i>
                     </button>
                   </td>
@@ -184,13 +200,32 @@
           >
             <div class="pharmacies">
               <h2><i class="fas fa-map-marked-alt"></i>Phamarices</h2>
+              <form
+                @submit.prevent="addPharmacy"
+                class="d-flex justify-content-around"
+              >
+                <input
+                  v-model="pharmacy.pharmacyName"
+                  type="text"
+                  placeholder="naziv"
+                  required
+                />
+                <input
+                  v-model="pharmacy.location"
+                  type="text"
+                  placeholder="adresa"
+                />
+
+                <button class="btn btn-dark" type="submit">DODAJ</button>
+              </form>
+
               <div class="container__list">
                 <div
                   class="container__list-item"
                   v-for="(item, index) in pharmacies"
                   :key="index"
                 >
-                  <div>{{ item.name }}</div>
+                  <div>{{ item.name }} {{ item.location }}</div>
                 </div>
               </div>
             </div>
@@ -203,6 +238,9 @@
           >
             <div class="pharmaciest">
               <h2><i class="fas fa-user-edit"></i>Phamaricest</h2>
+              <form @submit.prevent="addPhamaricest">
+                <input type="text" v-model="phamaricest.phamaricestName" />
+              </form>
               <div class="container__list">
                 <div
                   class="container__list-item"
@@ -263,8 +301,10 @@
 export default {
   name: "PharmacyAdmin",
   data: () => ({
+    modal: false,
+
     medication: {
-      id: new Date().getTime().toString(),
+      id: "",
       medicationName: "",
       medicationType: "",
       location: "",
@@ -273,12 +313,23 @@ export default {
       dailyDoes: "",
       substitue: "",
     },
+
+    pharmacy: {
+      id: "",
+      pharmacyName: "",
+      location: "",
+    },
+
+    phamaricest: {
+      id: "",
+      phamaricestName: "",
+    },
   }),
   methods: {
     addMedications() {
       this.$store.commit("addMedicationToList", {
         medication: {
-          id: this.medication.id,
+          id: new Date().getTime().toString(),
           name: this.medication.medicationName,
           location: this.medication.location,
           type: this.medication.type,
@@ -287,6 +338,37 @@ export default {
           dailyDoes: this.medication.dailyDoes,
           substitue: this.medication.substitue,
         },
+      });
+    },
+
+    addPharmacy() {
+      this.$store.commit("addPharmacyToList", {
+        pharmacy: {
+          id: new Date().getTime().toString(),
+          name: this.pharmacy.pharmacyName,
+          location: this.pharmacy.location,
+        },
+      });
+    },
+
+    addPhamaricest() {
+      this.$store.commit("addPharmaciestToList", {
+        phamaricest: {
+          id: new Date().getTime().toString(),
+          name: this.phamaricest.phamaricestName,
+        },
+      });
+    },
+
+    updateMedication(id) {
+      this.$store.commit("updateMedication", {
+        id,
+      });
+    },
+
+    removeMedication(id) {
+      this.$store.commit("removeMedicationFromArr", {
+        id,
       });
     },
   },
@@ -303,6 +385,10 @@ export default {
     },
     pharmaciest() {
       return this.$store.state.pharmaciest;
+    },
+
+    singleMedication() {
+      return this.$store.state.singleMedication;
     },
   },
 };
@@ -330,5 +416,14 @@ export default {
 .pharmacies {
   display: flex;
   flex-direction: column;
+}
+
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  height: 400px;
+  background-color: seagreen;
 }
 </style>
