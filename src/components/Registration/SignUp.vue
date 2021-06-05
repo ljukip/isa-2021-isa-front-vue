@@ -7,16 +7,16 @@
                 <li class="error__item" v-for="error in errors" :key="error.index">{{ error }}</li>
               </ul>
             </p>
-
             <h1>Sing up</h1>
-            <div class="input-wrapper"><i class="fas fa fa-user"></i><input class="form__input" v-model="name" type="text" placeholder="Name"></div>
+            <div class="input-wrapper"><i class="fas fa fa-user"></i><input class="form__input" v-model="fname" type="text" placeholder="First Name"></div>
+            <div class="input-wrapper"><i class="fas fa fa-user"></i><input class="form__input" v-model="lname" type="text" placeholder="Last Name"></div>
             <div class="input-wrapper"><i class="fas fa fa-envelope"></i><input class="form__input" v-model="email" type="email" placeholder="Email"></div>
-            <div class="input-wrapper"><i class="fas fa fa-map-marker-alt"></i><input class="form__input" v-model="adress" type="text" placeholder="Adress"></div>
+            <div class="input-wrapper"><i class="fas fa fa-map-marker-alt"></i><input class="form__input" v-model="address" type="text" placeholder="Address"></div>
             <div class="input-wrapper"><i class="fas fa fa-building"></i><input class="form__input" v-model="city" type="text" placeholder="City"></div>
             <div class="input-wrapper"><i class="fas fa fa-flag"></i><input class="form__input" v-model="country" type="text" placeholder="Country"></div>
             <div class="input-wrapper"><i class="fas fa fa-phone"></i><input class="form__input" v-model="number" type="text" placeholder="Phone Number"></div>
             <div class="input-wrapper"><i class="fas fa fa-key"></i><input class="form__input" v-model="password" type="password" placeholder="Password"></div>
-            <div class="input-wrapper"><i class="fas fa fa-key"></i><input class="form__input" v-model="password" type="password" placeholder="Password retype"></div>
+            <div class="input-wrapper"><i class="fas fa fa-key"></i><input class="form__input" v-model="repassword" type="password" placeholder="Password retype"></div>
 
           <button class="form__btn" type="submit">Sign Up</button>
       </form>
@@ -28,28 +28,34 @@ export default {
   name: "SignUp",
   data: () => ({
     errors: [],
-    name: "",
+    fname: "",
+    lname: "",
     email: "",
-    adress: "",
+    address: "",
     city: "",
     country: "",
     number: "",
     password: "",
+    repassword: "",
   }),
   methods: {
     signIn() {
       this.errors = [];
 
-      if (!this.name) {
-        this.errors.push("Name required.");
+      if (!this.fname) {
+        this.errors.push("First Name required.");
+      }
+
+      if (!this.lname) {
+        this.errors.push("Last Name required.");
       }
 
       if (!this.email) {
         this.errors.push("Email required.");
       }
 
-      if (!this.adress) {
-        this.errors.push("Adress required.");
+      if (!this.address) {
+        this.errors.push("Address required.");
       }
 
       if (!this.city) {
@@ -68,11 +74,20 @@ export default {
         this.errors.push("Password required.");
       }
 
+      if (!this.repassword) {
+        this.errors.push("Password retype cant be empty");
+      }
+
+      if (this.repassword != this.password) {
+        this.errors.push("Passwords dont mach.");
+      }
+
       if (!this.errors.length) {
         this.$store.commit("signInUser", {
-          name: this.name,
+          fname: this.fname,
+          lname: this.lname,
           email: this.email,
-          adress: this.adress,
+          adress: this.address,
           city: this.city,
           country: this.country,
           number: this.number,
@@ -86,11 +101,12 @@ export default {
 
 <style lang="scss">
 .form {
-  margin: 0 auto;
+  /* margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   width: 400px;
+*/
 
   &__input {
     width: 300px;

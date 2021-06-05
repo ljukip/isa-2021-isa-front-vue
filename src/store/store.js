@@ -3,12 +3,16 @@ import Vuex from "vuex";
 import axios from "axios";
 import router from "../router";
 
-axios.defaults.baseURL = "http://localhost:8080/";
+//backend url
+axios.defaults.baseURL = "http://localhost:8081/";
+
 
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
   state: {
+    infoMsg: '',
+    userStatus: '',
     pharmacies: [
       {
         id: "1",
@@ -136,6 +140,10 @@ export const store = new Vuex.Store({
       return state.users;
     },
 
+    getInfoMsg(state) {
+      return state.infoMsg;
+    },
+
     getMedicatons(state) {
       return state.medications;
     },
@@ -149,10 +157,29 @@ export const store = new Vuex.Store({
   mutations: {
     signInUser(state, payload) {
       const user = payload;
-      console.log(user);
-      let users = state.users;
-      users.push(user);
-      console.log(users);
+      //console.log(user);
+      let userName = payload.email.split('@');
+      const regUser = {
+        "username": userName[0] + Math.floor(Math.random() * 10000),
+        "password": user.password,
+        "firstname": user.fname,
+        "lastname": user.lname,
+        "email": user.email,
+        "address": user.address,
+        "city": user.city,
+        "country": user.country,
+        "phone": user.number,
+        "role": "PATIENT"
+      }
+      //let users = state.users;
+      //console.log(users);
+      axios.post('/auth/signup', regUser)
+        .then(function (response) {
+          if (response.status == '201') {
+            state.infoMsg = "Registartion successful! Please check your email for verification.";
+            router.push('/');
+          }
+        });
     },
     addMedicationToList(state, payload) {
       const medication = payload;

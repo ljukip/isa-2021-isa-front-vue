@@ -44,7 +44,7 @@ header {
 #app > .login-form h1,
 #app > .form-signup h1,
 #app > .patient h1,
-#app > .admin-contol-panel h1 {
+#app > .admin-control-panel h1 {
   margin-bottom: 50px;
   font-family: "Lato", sans-serif;
   text-transform: uppercase;
@@ -169,8 +169,8 @@ ul.nav__list {
   font-weight: 600;
   font-style: normal;
 }
-
-.admin-control-panel .container {
+.admin-control-panel .container,
+.home-wrapper .container {
   background-color: #ffffff;
   border-top: 1px solid #dee2e6;
   border-right: 1px solid #dee2e6;
@@ -259,4 +259,15 @@ ul.nav__list {
   height: 35px;
   border: 1px solid #dee2e6;
   margin: 10px;
+}
+.home-wrapper .container h1 {
+  width: 100%;
+  display: inline-block;
+  margin-bottom: 50px;
+}
+.home-wrapper .container .login-btn {
+  margin-right: 50px;
+}
+.home-wrapper .container a button {
+  width: 100px;
 }
