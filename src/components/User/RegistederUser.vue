@@ -27,6 +27,7 @@
       </div>
       <div class="section-2 col-md-8">
         <div class="list-tab">
+          <vc-date-picker></vc-date-picker>
           <!--Ovde bi mogli da ubacimo ovu komponentu  https://vcalendar.io/ ili ovu https://madewithvuejs.com/dayspan-vuetify -->
           <div v-for="sa in regUser.scheduledAppointments" :key="sa">
             Scheduledv Appointments :<i class="spec-info-time"> {{ sa }}</i>
@@ -118,9 +119,18 @@
 <script>
 export default {
   name: "RegistredUser",
+  selectedValue: new Date(),
   data: () => ({
     ID: "",
+    attrs: [
+      {
+        key: "today",
+        highlight: true,
+        dates: new Date(),
+      },
+    ],
   }),
+
   created() {
     const { id } = this.$route.params;
     this.ID = id;
