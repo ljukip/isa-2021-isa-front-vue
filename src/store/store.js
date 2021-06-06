@@ -206,13 +206,13 @@ export const store = new Vuex.Store({
     },
     addMedicationToList(state, payload) {
       const medication = payload;
-      console.log(medication);
-      const {
-        medication: { id, name, location },
-      } = medication;
-      console.log(id, name, location);
-      let medications = state.medications;
-      medications.push(medication.medication);
+      axios.post('/api/medication/create', medication)
+        .then(function (response) {
+          //console.log(response);
+          let medications = state.medications;
+          medications.push(response);
+          window.location.reload();
+        });
     },
 
     addPharmacyToList(state, payload) {
