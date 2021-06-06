@@ -129,9 +129,27 @@
           </div>
 
           <div class="col-6">
-            <div v-for="sa in regUser.scheduledAppointments" :key="sa">
-              Scheduledv Appointments :<i class="spec-info-time"> {{ sa }}</i>
-            </div>
+            <div>Appointments History</div>
+            <table style="font-size: 12px" class="appHistory">
+              <tr>
+                <th>Date</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Status</th>
+                <th>Pharmacist</th>
+              </tr>
+              <tr
+                class="container__list-item"
+                v-for="(item, index) in apHistory"
+                :key="index"
+              >
+                <td>{{ item.date }}</td>
+                <td>{{ item.startTime }}</td>
+                <td>{{ item.endTime }}</td>
+                <td>{{ item.status }}</td>
+                <td>{{ item.pharmacist }}</td>
+              </tr>
+            </table>
           </div>
         </div>
         <div class="list-tab">
@@ -223,8 +241,10 @@ export default {
   name: "RegistredUser",
   infoMessage: "",
   selectedValue: new Date(),
+
   data: () => ({
     ID: "",
+    apHistory: {},
     attrs: [
       {
         key: "Appointment",
@@ -235,6 +255,8 @@ export default {
     editBool: false,
     date: new Date(),
     timezone: "",
+
+    id: localStorage.getItem("id"),
   }),
 
   created() {
@@ -252,6 +274,7 @@ export default {
 
       return users[0];
     },
+
     information: function () {
       return this.$store.state.infoMsg;
     },
@@ -269,6 +292,7 @@ export default {
         this.editBool = false;
       }
     },
+
     save() {
       if (!this.editBool) {
         this.editBool = true;
@@ -284,6 +308,16 @@ export default {
         this.user = Responce.data;
       });
     },
+  },
+  mounted: function () {
+    fetch(
+      "http://localhost:8081/api/appointments/user/" + this.id+ "/pharmacist/history"
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        this.apHistory = data;
+        console.log(data);
+      });
   },
 };
 </script>
