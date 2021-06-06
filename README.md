@@ -25,8 +25,7 @@ The frontend is a Vue.js application, and can be found at the following link htt
 It can be started by running:
 npm install and then
 npm run serve in the containing folder.
-Further installation details can be found in README.md in Front/pharmacy.
-In main.js file in pharmacy/src folder (Front/pharmacy/src/main.js)
+Further installation details can be found at https://github.com/ljukip/isa-2021-isa-front-vue.
 
 so that requests from the Frontend are directed to a Backend that is launched locally and not to one that was deployed on Heroku.
 ```
