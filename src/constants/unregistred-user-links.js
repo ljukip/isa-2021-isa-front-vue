@@ -3,6 +3,15 @@ export default [
     path: "/",
     name: "home",
   },
+
+  {
+    path: "/pharmacies",
+    name: "Pharmacies",
+  },
+  {
+    path: "/medications",
+    name: "Medications",
+  },
   {
     path: "/login",
     name: "login",
@@ -10,6 +19,6 @@ export default [
   {
     path: "/signup",
     name: "signup",
-  }
+  },
 
 ];

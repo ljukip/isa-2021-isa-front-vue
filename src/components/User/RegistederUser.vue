@@ -26,14 +26,45 @@
           <i class="fas fa fa-phone"></i><i>Number :</i> {{ regUser.number }}
         </div>
 
-        <buttom class="btn btn-info">Edit profile info</buttom>
+        <button class="btn btn-info">Edit profile info</button>
       </div>
       <div class="section-2 col-md-8">
         <div class="list-tab row">
-          <div class="col-6">
-            <vc-date-picker :attributes="attrs"></vc-date-picker>
+          <div class="col-6 reservation-pick">
+            <div>
+              <div class="flex mb-2 reservation">
+                <h4>Zakazite prgled kod doktora</h4>
+                <label class="text-gray-600 font-medium"
+                  ><input
+                    class="mr-1"
+                    type="radio"
+                    value=""
+                    v-model="timezone"
+                  />Local</label
+                >
+                <label class="text-gray-600 font-medium ml-3"
+                  ><input
+                    class="mr-1"
+                    type="radio"
+                    value="utc"
+                    v-model="timezone"
+                  />UTC</label
+                >
+              </div>
+              <vc-date-picker
+                v-model="date"
+                mode="dateTime"
+                :timezone="timezone"
+              />
+            </div>
+            <div v-if="information != ''">{{ information }}</div>
+            <form @submit.prevent="getAppointment">
+              <button class="btn btn-dark" type="submit">
+                Get Appointment
+              </button>
+            </form>
           </div>
-          <!--Ovde bi mogli da ubacimo ovu komponentu  https://vcalendar.io/ ili ovu https://madewithvuejs.com/dayspan-vuetify -->
+
           <div class="col-6">
             <div v-for="sa in regUser.scheduledAppointments" :key="sa">
               Scheduledv Appointments :<i class="spec-info-time"> {{ sa }}</i>
@@ -126,6 +157,7 @@
 <script>
 export default {
   name: "RegistredUser",
+  infoMessage: "",
   selectedValue: new Date(),
   data: () => ({
     ID: "",
@@ -136,6 +168,9 @@ export default {
         dates: new Date("2021-06-10"),
       },
     ],
+
+    date: new Date(),
+    timezone: "",
   }),
 
   created() {
@@ -152,6 +187,16 @@ export default {
       });
 
       return user;
+    },
+    information: function () {
+      return this.$store.state.infoMsg;
+    },
+  },
+  methods: {
+    getAppointment() {
+      this.$store.commit("getAppointment", {
+        id: this.ID,
+      });
     },
   },
 };

@@ -5,7 +5,7 @@ import router from "../router";
 import jwt_decode from "jwt-decode";
 
 //Podesiti URL backend-a
-axios.defaults.baseURL = "http://localhost:8069/";
+axios.defaults.baseURL = "http://localhost:8081/";
 
 
 Vue.use(Vuex);
@@ -161,7 +161,7 @@ export const store = new Vuex.Store({
       axios.post('/auth/signup', regUser)
         .then(function (response) {
           if (response.status == '201') {
-            state.infoMsg = "Uspesno ste se registrovali, proveri te mail da bi ste ativirali nalog.";
+            state.infoMsg = "Registration successful! Please check your email for verification.";
             router.push('/');
           }
         });
@@ -230,6 +230,19 @@ export const store = new Vuex.Store({
       console.log(id, name, location);
       let pharmaciest = state.pharmaciest;
       pharmaciest.push(phamaricest.phamaricest);
+    },
+    getAppointment(state, payload) {
+      let reservation = {
+        "appointmentId": 1,
+        "pacientId": payload.id
+      }
+      axios.post('/api/dermatolog/create/reservation', reservation)
+        .then(function (response) {
+
+          state.infoMsg = "Rezervacija uspesno poslata. Status:" + response.status;
+
+
+        })
     },
 
     updateMedication(state, payload) {

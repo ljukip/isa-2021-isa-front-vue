@@ -168,7 +168,7 @@
                                     <div><i class="fas fa fa-flag"></i><i>Country :</i> {{ regUser.country }}</div>
                                     <div><i class="fas fa fa-phone"></i><i>Number :</i> {{ regUser.number }}</div>
 
-                                    <buttom class="btn btn-info ">Edit profile info</buttom>
+                                    <button class="btn btn-info ">Edit profile info</button>
                                 </div>
                                 </div>
                             </div>
