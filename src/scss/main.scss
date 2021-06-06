@@ -171,7 +171,21 @@ ul.nav__list {
 }
 .admin-control-panel .container,
 .home-wrapper .container {
-  background-color: #ffffff;
+  background-color: #dee2e638;
+  border-top: 1px solid #dee2e6;
+  border-right: 1px solid #dee2e6;
+  border-bottom: 1px solid #dee2e6;
+  border-left: 15px solid #219ca5;
+  margin-bottom: 50px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  padding-left: 0;
+  padding-right: 0;
+}
+.list-wrapper .container {
+  background-color: #dee2e696;
   border-top: 1px solid #dee2e6;
   border-right: 1px solid #dee2e6;
   border-bottom: 1px solid #dee2e6;
@@ -203,15 +217,15 @@ ul.nav__list {
   margin-right: 15px;
 }
 .admin-content-wrapper .list-table tr {
-  border: 1px solid #dee2e6;
+  border: 1px solid #263749;
 }
 .admin-content-wrapper .list-table th {
   font-size: 14px;
   text-transform: uppercase;
-  border-right: 1px solid #dee2e6;
+  border-right: 1px solid #263749;
 }
 .admin-content-wrapper .list-table td {
-  border-right: 1px solid #dee2e6;
+  border-right: 1px solid #263749;
   font-size: 14px;
   text-align: left;
   padding-left: 5px;

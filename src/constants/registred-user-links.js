@@ -4,20 +4,20 @@ export default [
         name: "home",
     },
     {
-        path: "/about",
-        name: "about",
+        path: "/pharmacies",
+        name: "Pharmacies",
     },
     {
-        path: "/login",
-        name: "login",
+        path: "/medications",
+        name: "Medications",
     },
     {
-        path: "/signup",
-        name: "signup",
-    },
-    {
-        path: "/registederuser/",
+        path: "/registederuser/" + localStorage.getItem("id"),
         name: "user-profile",
+    },
+    {
+        path: "/logout",
+        name: "logout",
     },
 
 ];

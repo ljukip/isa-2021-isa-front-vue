@@ -17,10 +17,34 @@
           <img src="../../assets/images/logo-pharmacy.png" class="nav__logo" />
         </div>
         <div>
-          <ul class="nav__list">
+          <ul class="nav__list" v-if="!jwt">
             <router-link
               class="nav__item"
-              v-for="(link, index) in links"
+              v-for="(link, index) in linksUnregistered"
+              :to="link.path"
+              :key="index"
+              v-bind:class="{ selected: index === 0 }"
+            >
+              {{ link.name }}
+            </router-link>
+          </ul>
+
+          <ul class="nav__list" v-if="jwt && role === 'PHADMIN'">
+            <router-link
+              class="nav__item"
+              v-for="(link, index) in linksPAdmin"
+              :to="link.path"
+              :key="index"
+              v-bind:class="{ selected: index === 0 }"
+            >
+              {{ link.name }}
+            </router-link>
+          </ul>
+
+          <ul class="nav__list" v-if="jwt && role === 'PATIENT'">
+            <router-link
+              class="nav__item"
+              v-for="(link, index) in linksRegistered"
               :to="link.path"
               :key="index"
               v-bind:class="{ selected: index === 0 }"
@@ -35,13 +59,21 @@
 </template>
 
 <script>
-import links from "../../constants/unregistred-user-links";
+import linksUnregistered from "../../constants/unregistred-user-links";
+import linksRegistered from "../../constants/registred-user-links";
+import linksPAdmin from "../../constants/pharmacy-admin-links";
+import linksAdmin from "../../constants/admin-links";
 
 export default {
   name: "Navbar",
   data() {
     return {
-      links,
+      linksUnregistered,
+      linksRegistered,
+      linksPAdmin,
+      linksAdmin,
+      jwt: localStorage.getItem("jwt"),
+      role: localStorage.getItem("role"),
     };
   },
 };

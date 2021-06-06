@@ -5,6 +5,7 @@ import About from "./views/About.vue";
 import Pharmacies from "./views/Pharmacies.vue";
 import Medications from "./views/Medications.vue";
 import Login from "./views/Login.vue";
+import Logout from "./views/Logout.vue";
 import SignUp from "./views/SignUp.vue";
 import PharmacyAdmin from "./views/PharmacyAdmin.vue";
 import RegistederUser from "./views/RegistederUser.vue";
@@ -32,6 +33,10 @@ export default new Router({
     {
       path: "/login",
       component: Login,
+    },
+    {
+      path: "/logout",
+      component: Logout,
     },
     {
       path: "/signup",

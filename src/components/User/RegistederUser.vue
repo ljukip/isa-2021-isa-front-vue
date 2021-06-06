@@ -4,36 +4,99 @@
     <div class="section flex-row col-12 d-flex">
       <div class="section-1 col-md-4">
         <div><img class="img-fluid d-block" src="../../assets/male.jpg" /></div>
-        <div><i class="fas fa fa-id-card"></i><i>Patient ID :</i> {{ ID }}</div>
         <div>
-          <i class="fas fa fa-envelope"></i><i>Email:</i> {{ regUser.email }}
+          <i class="fas fa fa-id-card"></i><i>Patient ID :</i>
+          <div
+            v-if="editBool"
+            contenteditable="true"
+            style="border-style: outset"
+          >
+            {{ ID }}
+          </div>
+          <div v-if="!editBool">{{ ID }}</div>
+        </div>
+        <div>
+          <i class="fas fa fa-envelope"></i><i>Email:</i>
+          <div
+            v-if="editBool"
+            contenteditable="true"
+            style="border-style: outset"
+          >
+            {{ regUser.email }}
+          </div>
+          <div v-if="!editBool">{{ regUser.email }}</div>
         </div>
         <div>
           <i class="fas fa fa-user"></i><i>Name:</i>
-          {{ regUser.fname + " " + regUser.lname }}
+          <div
+            v-if="editBool"
+            contenteditable="true"
+            style="border-style: outset"
+          >
+            {{ regUser.fname + " " + regUser.lname }}
+          </div>
+          <div v-if="!editBool">
+            {{ regUser.fname + " " + regUser.lname }}
+          </div>
         </div>
         <div>
           <i class="fas fa fa-map-marker-alt"></i><i>Address:</i>
-          {{ regUser.adress }}
+          <div
+            v-if="editBool"
+            contenteditable="true"
+            style="border-style: outset"
+          >
+            {{ regUser.adress }}
+          </div>
+          <div v-if="!editBool">{{ regUser.adress }}</div>
         </div>
         <div>
-          <i class="fas fa fa-building"></i><i>City :</i> {{ regUser.city }}
+          <i class="fas fa fa-building"></i><i>City :</i>
+          <div
+            v-if="editBool"
+            contenteditable="true"
+            style="border-style: outset"
+          >
+            {{ regUser.city }}
+          </div>
+          <div v-if="!editBool">{{ regUser.city }}</div>
         </div>
         <div>
-          <i class="fas fa fa-flag"></i><i>Country :</i> {{ regUser.country }}
+          <i class="fas fa fa-flag"></i><i>Country :</i>
+          <div
+            v-if="editBool"
+            contenteditable="true"
+            style="border-style: outset"
+          >
+            {{ regUser.country }}
+          </div>
+          <div v-if="!editBool">{{ regUser.country }}</div>
         </div>
         <div>
-          <i class="fas fa fa-phone"></i><i>Number :</i> {{ regUser.number }}
+          <i class="fas fa fa-phone"></i><i>Number :</i>
+          <div
+            v-if="editBool"
+            contenteditable="true"
+            style="border-style: outset"
+          >
+            {{ regUser.number }}
+          </div>
+          <div v-if="!editBool">{{ regUser.number }}</div>
         </div>
 
-        <button class="btn btn-info">Edit profile info</button>
+        <label v-if="!editBool" class="btn btn-info" v-on:click="changeEdit()">
+          Edit profile info
+        </label>
+        <label v-if="editBool" class="btn btn-success" v-on:click="save()">
+          Save profile info
+        </label>
       </div>
       <div class="section-2 col-md-8">
         <div class="list-tab row">
           <div class="col-6 reservation-pick">
             <div>
               <div class="flex mb-2 reservation">
-                <h4>Zakazite prgled kod doktora</h4>
+                <h4>New dermatologist appointment</h4>
                 <label class="text-gray-600 font-medium"
                   ><input
                     class="mr-1"
@@ -155,6 +218,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "RegistredUser",
   infoMessage: "",
@@ -168,7 +232,7 @@ export default {
         dates: new Date("2021-06-10"),
       },
     ],
-
+    editBool: false,
     date: new Date(),
     timezone: "",
   }),
@@ -196,6 +260,28 @@ export default {
     getAppointment() {
       this.$store.commit("getAppointment", {
         id: this.ID,
+      });
+    },
+    changeEdit() {
+      if (!this.editBool) {
+        this.editBool = true;
+      } else {
+        this.editBool = false;
+      }
+    },
+    save() {
+      if (!this.editBool) {
+        this.editBool = true;
+      } else {
+        this.editBool = false;
+      }
+      axios.put(`user/update/`, this.user).then((Responce) => {
+        console.log("updated");
+        this.messageVal = "SuccesfullUpdate";
+        setTimeout(() => (this.messageVal = ""), 6000);
+        localStorage.setItem("username", this.user.username);
+        localStorage.setItem("role", this.user.role);
+        this.user = Responce.data;
       });
     },
   },

@@ -4,10 +4,6 @@ export default [
         name: "home",
     },
     {
-        path: "/about",
-        name: "about",
-    },
-    {
         path: "/medications",
         name: "medications",
     },
@@ -16,19 +12,12 @@ export default [
         name: "pharmacies",
     },
     {
-        path: "/login",
-        name: "login",
-    },
-    {
-        path: "/signup",
-        name: "signup",
-    },
-    {
-        path: "/registederuser/",
-        name: "user-profile",
-    },
-    {
         path: "/pharmacyadmin",
         name: "admin-profile",
+    },
+
+    {
+        path: "/logout",
+        name: "logout",
     },
 ];

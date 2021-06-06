@@ -172,8 +172,11 @@ export const store = new Vuex.Store({
         .then(function (response) {
           if (response.status == '200') {
             state.JWT = response.data.accessToken;
+            localStorage.setItem("jwt", response.data);
+            window.location.reload();
             var decode = jwt_decode(response.data.accessToken)
             state.userStatus = decode.role;
+            localStorage.setItem("role", decode.role)
             axios.get('/user/username/' + decode.sub)
               .then(function (response2) {
                 state.users[0].userID = response2.data.id;
@@ -189,7 +192,9 @@ export const store = new Vuex.Store({
                 state.users[0].pharmaciesSubscribedList = response2.data.prescriptions;
 
                 if (state.userStatus == 'PATIENT') {
-                  router.push('/registederuser/' + response2.data.id)
+                  localStorage.setItem("id", response2.data.id)
+
+                  router.push("/registederuser/" + response2.data.id)
                 } else {
                   router.push('/pharmacyadmin')
                 }
