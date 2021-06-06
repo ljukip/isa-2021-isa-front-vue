@@ -8,10 +8,20 @@
             <div class="input-group">
               <div class="form-outline">
                 <div class="input-wrapper">
-                  <input type="search" id="form1" class="form__input" />
+                  <input
+                    type="search"
+                    id="form1"
+                    class="form__input"
+                    v-model="filter"
+                  />
                 </div>
               </div>
-              <button type="button" class="btn btn-dark" style="height: 41px">
+              <button
+                type="button"
+                class="btn btn-dark"
+                style="height: 41px"
+                @click.prevent="find()"
+              >
                 <i class="fas fa-search"></i>
               </button>
             </div>
@@ -32,7 +42,8 @@
               <tr
                 class="container__list-item"
                 v-for="(item, index) in apiMedication"
-                :key="index"
+                :key="item.code"
+                :data-index="index"
               >
                 <td>{{ item.code }}</td>
                 <td>{{ item.name }}</td>
@@ -54,11 +65,17 @@
 export default {
   data: () => ({
     apiMedication: {},
+    filter: "",
   }),
   computed: {
     // medications() {
     //   return this.$store.state.medications;
     // },
+  },
+  methods: {
+    find: function () {
+      this.apiMedication.filter((v) => v.code === this.filter);
+    },
   },
   mounted: function () {
     //PREPRAVITI PORTOVE

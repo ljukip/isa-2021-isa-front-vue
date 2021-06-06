@@ -1,7 +1,7 @@
 
 #Pharmacy System - ISA projekat
 
-#usernames and passwords for login (username, password)
+#usernames and passwords for login (username (deo email adrese do @), password)
 ```bash
 Patient: user, 123
 Pharmacy Administrator: admin3, admin123

@@ -246,11 +246,11 @@ export default {
     regUser() {
       let users = this.$store.state.users;
 
-      let user = users.find((usr) => {
-        return usr.userID == this.ID;
-      });
+      // let user = users.find((usr) => {
+      //   return usr.userID == this.ID;
+      // });
 
-      return user;
+      return users[0];
     },
     information: function () {
       return this.$store.state.infoMsg;
