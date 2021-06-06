@@ -34,7 +34,7 @@ export default {
       }
 
       if (!this.errors.length) {
-        this.$store.dispatch("loginUser", {
+        this.$store.commit("loginUser", {
           username: this.username,
           password: this.password,
         });

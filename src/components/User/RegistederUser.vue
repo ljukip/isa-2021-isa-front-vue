@@ -8,7 +8,10 @@
         <div>
           <i class="fas fa fa-envelope"></i><i>Email:</i> {{ regUser.email }}
         </div>
-        <div><i class="fas fa fa-user"></i><i>Name:</i> {{ regUser.name }}</div>
+        <div>
+          <i class="fas fa fa-user"></i><i>Name:</i>
+          {{ regUser.fname + " " + regUser.lname }}
+        </div>
         <div>
           <i class="fas fa fa-map-marker-alt"></i><i>Address:</i>
           {{ regUser.adress }}
@@ -26,11 +29,15 @@
         <buttom class="btn btn-info">Edit profile info</buttom>
       </div>
       <div class="section-2 col-md-8">
-        <div class="list-tab">
-          <vc-date-picker></vc-date-picker>
+        <div class="list-tab row">
+          <div class="col-6">
+            <vc-date-picker :attributes="attrs"></vc-date-picker>
+          </div>
           <!--Ovde bi mogli da ubacimo ovu komponentu  https://vcalendar.io/ ili ovu https://madewithvuejs.com/dayspan-vuetify -->
-          <div v-for="sa in regUser.scheduledAppointments" :key="sa">
-            Scheduledv Appointments :<i class="spec-info-time"> {{ sa }}</i>
+          <div class="col-6">
+            <div v-for="sa in regUser.scheduledAppointments" :key="sa">
+              Scheduledv Appointments :<i class="spec-info-time"> {{ sa }}</i>
+            </div>
           </div>
         </div>
         <div class="list-tab">
@@ -124,9 +131,9 @@ export default {
     ID: "",
     attrs: [
       {
-        key: "today",
+        key: "Appointment",
         highlight: true,
-        dates: new Date(),
+        dates: new Date("2021-06-10"),
       },
     ],
   }),

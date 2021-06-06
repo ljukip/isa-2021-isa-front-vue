@@ -271,3 +271,30 @@ ul.nav__list {
 .home-wrapper .container a button {
   width: 100px;
 }
+.patients .list-table {
+  width: 100%;
+}
+#nav-add-admins input {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px 25px;
+  display: inline-block;
+  width: 250px;
+}
+#nav-add-admins i.fas {
+  margin-right: 35px;
+  width: 35px;
+}
+#nav-add-admins form {
+  text-align: center;
+  background-color: #f1f1f1;
+  padding: 25px;
+}
+#nav-add-admins form button {
+  margin: 50px auto;
+  position: relative;
+  width: 250px;
+  padding: 10px;
+  padding-bottom: 35px;
+  border-radius: 5px;
+}

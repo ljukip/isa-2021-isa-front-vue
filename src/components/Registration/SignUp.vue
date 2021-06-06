@@ -87,7 +87,7 @@ export default {
           fname: this.fname,
           lname: this.lname,
           email: this.email,
-          adress: this.address,
+          address: this.address,
           city: this.city,
           country: this.country,
           number: this.number,

@@ -2,9 +2,10 @@ import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
 import router from "../router";
+import jwt_decode from "jwt-decode";
 
-//backend url
-axios.defaults.baseURL = "http://localhost:8081/";
+//Podesiti URL backend-a
+axios.defaults.baseURL = "http://localhost:8069/";
 
 
 Vue.use(Vuex);
@@ -13,6 +14,7 @@ export const store = new Vuex.Store({
   state: {
     infoMsg: '',
     userStatus: '',
+    JWT: '',
     pharmacies: [
       {
         id: "1",
@@ -88,40 +90,23 @@ export const store = new Vuex.Store({
     users: [
       {
         userID: 1,
-        name: "user1",
+        fname: "user1",
+        lname: "lname",
         email: "user@gmai.com",
         adress: "adress 1",
         city: "city",
         country: "country",
         number: "545445",
         password: "12ss3",
-        scheduledAppointments: ["31.5.2021"],
+        scheduledAppointments: ["2021-06-10"],
         appointmentsListDermatologist: [
-          { date: "31.5.2021", doctor: "Dejan Markovic" },
+          { date: "2021-06-10", doctor: "Dejan Markovic" },
         ],
         appointmentsListPharmaciest: [
-          { date: "31.5.2021", doctor: "Jovan Jovanovic" },
+          { date: "2021-06-10", doctor: "Jovan Jovanovic" },
         ],
         pharmaciesSubscribedList: ["lek 1", "lek 2", "lek 3"],
-      },
-      {
-        userID: 2,
-        name: "dejocar",
-        email: "dejocar@gmai.com",
-        adress: "adress 1",
-        city: "city",
-        country: "country",
-        number: "2312",
-        password: "123",
-        scheduledAppointments: ["11.5.2021"],
-        appointmentsListDermatologist: [
-          { date: "11.5.2021", doctor: "Dejan Markovic" },
-        ],
-        appointmentsListPharmaciest: [
-          { date: "11.5.2021", doctor: "Jovan Jovanovic" },
-        ],
-        pharmaciesSubscribedList: ["lek 4", "lek 5", "lek 6"],
-      },
+      }
     ],
     dermatologist: [{ id: "1", name: "Dejo doktor dermatologije" }],
     pharmaciest: [{ id: "2", name: "Dejo doktor farmacije" }],
@@ -157,10 +142,10 @@ export const store = new Vuex.Store({
   mutations: {
     signInUser(state, payload) {
       const user = payload;
-      //console.log(user);
-      let userName = payload.email.split('@');
+      //console.log(user.password);
+      //let userName =payload.email.split('@');
       const regUser = {
-        "username": userName[0] + Math.floor(Math.random() * 10000),
+        "username": user.email,
         "password": user.password,
         "firstname": user.fname,
         "lastname": user.lname,
@@ -176,10 +161,43 @@ export const store = new Vuex.Store({
       axios.post('/auth/signup', regUser)
         .then(function (response) {
           if (response.status == '201') {
-            state.infoMsg = "Registartion successful! Please check your email for verification.";
+            state.infoMsg = "Uspesno ste se registrovali, proveri te mail da bi ste ativirali nalog.";
             router.push('/');
           }
         });
+    },
+    loginUser(state, payload) {
+      const loginInfo = payload;
+      axios.post('/auth/login', loginInfo)
+        .then(function (response) {
+          if (response.status == '200') {
+            state.JWT = response.data.accessToken;
+            var decode = jwt_decode(response.data.accessToken)
+            state.userStatus = decode.role;
+            axios.get('/user/username/' + decode.sub)
+              .then(function (response2) {
+                state.users[0].userID = response2.data.id;
+                state.users[0].username = response2.data.username;
+                state.users[0].fname = response2.data.firstName;
+                state.users[0].lname = response2.data.lastName;
+                state.users[0].email = response2.data.email;
+                state.users[0].adress = response2.data.address;
+                state.users[0].city = response2.data.city;
+                state.users[0].country = response2.data.country;
+                state.users[0].number = response2.data.phone;
+                state.users[0].appointmentsListPharmaciest = response2.data.pharmacy;
+                state.users[0].pharmaciesSubscribedList = response2.data.prescriptions;
+
+                if (state.userStatus == 'PATIENT') {
+                  router.push('/registederuser/' + response2.data.id)
+                } else {
+                  router.push('/pharmacyadmin')
+                }
+              });
+          }
+
+        }).catch(error => alert('Uneliste neispravnu lozinku ili korisnicko ime.' + error))
+
     },
     addMedicationToList(state, payload) {
       const medication = payload;
@@ -230,31 +248,65 @@ export const store = new Vuex.Store({
       });
       state.medications = newMeds;
     },
+    addNewAdmin(state, payload) {
+      const user = payload;
+
+      const regAdmin = {
+        "username": user.email,
+        "password": user.password,
+        "firstname": user.fname,
+        "lastname": user.lname,
+        "email": user.email,
+        "work_role": "PHADMIN",
+        'dedicated_pharmacy_id': user.pharmacyID
+      }
+      //console.log(regAdmin);
+      axios.post('/api/admin/add', regAdmin)
+        .then(function (response) {
+          if (response.status == '201') {
+            state.infoMsg = "Uspesno dodat admin";
+
+          }
+        })
+    },
   },
 
   actions: {
-    loginUser({ getters }, payload) {
-      const { username } = payload;
-      let users = getters.getUsers;
-      // check if user is valid
-      const checkUsers = (userName) =>
-        users.find((user) => {
-          if (user.name === userName) {
-            const { userID } = user;
+    //{ getters },
+    // loginUser(payload) {
+    //   const { username } = payload;
+    //   const loginInfo = payload;
+    //   console.log(username);
+    //   axios.post('/auth/login', loginInfo)
+    //   .then(function(response){
+    //     // if(response.status == '200') {
+    //     //  console.log(response.accessToken);
+    //     //  // router.push('/');
+    //     //  }
+    //     var decode = jwt_decode(response.accessToken)
+    //     console.log(decode);
 
-            router.push({
-              path: `/registederuser/${userID}`,
-            });
-          }
-          return;
-        });
+    //   });
+    //let users = getters.getUsers;
+    // check if user is valid
+    // const checkUsers = (userName) =>
+    //   users.find((user) => {
+    //     if (user.name === userName) {
+    //       const { userID } = user;
 
-      // check if user is admin
-      if (username === "vue-admin") {
-        router.push("/pharmacyadmin");
-      } else {
-        checkUsers(username);
-      }
-    },
+    //       router.push({
+    //         path: `/registederuser/${userID}`,
+    //       });
+    //     }
+    //     return;
+    //   });
+
+    // // check if user is admin
+    // if (username === "vue-admin") {
+    //   router.push("/pharmacyadmin");
+    // } else {
+    //   checkUsers(username);
+    // }
+    //   },
   },
 });
