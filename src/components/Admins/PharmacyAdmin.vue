@@ -33,20 +33,20 @@
                                 <div class="card">
                                     <h3>Dodavanje leka</h3>
                                     <form @submit.prevent="addMedications" class="d-flex justify-content-around">
-                                        <input v-model="medication.id" type="text" placeholder="sifra" required>
-                                        <input v-model="medication.medicationName" type="text" placeholder="naziv" required>
-                                        <select v-model="medication.type" placeholder="tip" required>
+                                        <input v-model="apiMedication.code" type="text" placeholder="sifra" required>
+                                        <input v-model="apiMedication.name" type="text" placeholder="naziv" required>
+                                        <select v-model="apiMedication.type" placeholder="tip" required>
                                             <option v-bind:value="'antidepresiv'">antidepresiv</option>
                                             <option v-bind:value="'anelgetik'">anelgetik</option>
                                             <option v-bind:value="'prbiotik'">prbiotik</option>
                                             <option v-bind:value="'kortikosteroid'">kortikosteroid</option>
                                             <option v-bind:value="'antihistemin'">antihistemin</option>
                                         </select>
-                                        <input v-model="medication.contraindications" type="text" placeholder="kontraindikacije">
-                                        <input v-model="medication.contains" type="text" placeholder="sastav">
-                                        <input v-model="medication.dailyDoes" type="text" placeholder="preporuceni unos" required>
-                                        <input v-model="medication.substitue" type="text" placeholder="zamenski lek">
-                                        <input v-model="medication.location" type="text" placeholder="lokacije" required>
+                                        <input v-model="apiMedication.sideEffects" type="text" placeholder="kontraindikacije">
+                                        <input v-model="apiMedication.ingredients" type="text" placeholder="sastav">
+                                        <input v-model="apiMedication.initialPrice" type="text" placeholder="Pocetna cena" required>
+                                        <input v-model="apiMedication.manufacturerid" type="text" placeholder="ID proizvodjaca">
+                                       
                                         <button class="btn btn-dark" type="submit">DODAJ</button>
                                     </form>
                                 </div>
@@ -60,20 +60,17 @@
                                         <th>Tip leka</th>
                                         <th>Kontraindikacije</th>
                                         <th>Sastav</th>
-                                        <th>Preporučeni unos</th>
-                                        <th>Zamenski lek</th>
-                                        <th>Lokacije</th>
-                                        <th>Akcije</th>
+                                        <th>Proizvodjac</th>
+                                        <th>Cena</th>
                                     </tr>
-                                    <tr class="container__list-item" v-for="(item, index) in medications" :key="index">
-                                        <td>{{item.id}}</td>
+                                    <tr class="container__list-item" v-for="(item, index) in apiMedication" :key="index">
+                                        <td>{{item.code}}</td>
                                         <td>{{item.name}}</td>
-                                        <td ><i class="fas fa-certificate" v-if="item.type == 'antidepresiv'"></i>{{item.type}}</td>
-                                        <td>{{item.contraindications}}</td>
-                                        <td>{{item.contains}}</td>
-                                        <td>{{item.dailyDoes}}</td>
-                                        <td>{{item.substitue}}</td>
-                                        <td>{{item.location}}</td>
+                                        <td >{{item.type}}</td>
+                                        <td>{{item.sideEffects}}</td>
+                                        <td>{{item.ingredients}}</td>
+                                        <td>{{item.manufacturer.name}}</td>
+                                        <td>{{item.currentPrice}}</td>
                                         <td><button @click="updateMedication(item.id)" class="btn btn-info" name="addMedication"><i class="fas fa-edit"></i></button><button @click="removeMedication(item.id)" class="btn btn-danger" name="removeMedication"><i class="fa fa-ban"></i></button></td>
                                     </tr>
                                 </table>
@@ -179,6 +176,10 @@
                                 <div class="row">
                                 <div class="section-1 col-md-4">
                                 <form id="addAdminsForm"  class="form form-signup addAdminsForm" @submit.prevent="addAdmins">
+                                    <div v-if="information != '' ">
+                                        <h3>{{information}}</h3>
+                                    </div>
+                                    <h3><i class="fas fa-cogs"></i>Add Admin</h3>
                                         <p v-if="errors.length">
                                         <b>Please correct the following error(s):</b>
                                         <ul>
@@ -196,10 +197,7 @@
 
                                 </div>
                                 <div class="section-2 col-md-6 offset-1">
-                                    <div v-if="information != '' ">
-                                        <h3>{{information}}</h3>
-                                    </div>
-                                    <h3><i class="fas fa-cogs"></i>Add Admin</h3>
+
                                     <table class="list-table">
                                     <tr>
                                         <th>ID</th>
@@ -249,6 +247,7 @@ export default {
     },
     medication: {
       id: "",
+      code: "",
       medicationName: "",
       medicationType: "",
       location: "",
@@ -257,6 +256,7 @@ export default {
       dailyDoes: "",
       substitue: "",
     },
+    apiMedication: {},
 
     pharmacy: {
       id: "",
@@ -275,16 +275,12 @@ export default {
   methods: {
     addMedications() {
       this.$store.commit("addMedicationToList", {
-        medication: {
-          id: new Date().getTime().toString(),
-          name: this.medication.medicationName,
-          location: this.medication.location,
-          type: this.medication.type,
-          contains: this.medication.contains,
-          contraindications: this.medication.contraindications,
-          dailyDoes: this.medication.dailyDoes,
-          substitue: this.medication.substitue,
-        },
+        code: this.apiMedication.code,
+        name: this.apiMedication.name,
+        type: this.apiMedication.type,
+        sideEffects: [this.apiMedication.sideEffects],
+        initialPrice: this.apiMedication.initialPrice,
+        manufacturer: this.apiMedication.manufacturerid,
       });
     },
 
@@ -346,6 +342,11 @@ export default {
           password: this.addAdmin.password,
           pharmacyID: this.addAdmin.pharmacyID,
         });
+        this.addAdmin.fname = "";
+        this.addAdmin.lname = "";
+        this.addAdmin.email = "";
+        this.addAdmin.password = "";
+        this.addAdmin.pharmacyID = "";
       }
     },
   },
@@ -378,6 +379,7 @@ export default {
     },
   },
   mounted: function () {
+    //PREPRAVITI PORTOVE
     fetch("http://localhost:8081/user/all")
       .then((response) => response.json())
       .then((data) => {
@@ -387,7 +389,11 @@ export default {
       .then((response) => response.json())
       .then((data) => {
         this.registerdAdmins = data;
-        //  console.log(data);
+      });
+    fetch("http://localhost:8081/api/medication/all")
+      .then((response) => response.json())
+      .then((data) => {
+        this.apiMedication = data;
       });
   },
 };

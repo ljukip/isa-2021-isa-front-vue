@@ -89,7 +89,7 @@ export const store = new Vuex.Store({
     ],
     users: [
       {
-        userID: 1,
+        id: '1',
         fname: "user1",
         lname: "lname",
         email: "user@gmai.com",
@@ -107,7 +107,8 @@ export const store = new Vuex.Store({
         ],
         pharmaciesSubscribedList: ["lek 1", "lek 2", "lek 3"],
       }
-    ],
+    ]
+    ,
     dermatologist: [{ id: "1", name: "Dejo doktor dermatologije" }],
     pharmaciest: [{ id: "2", name: "Dejo doktor farmacije" }],
     pharmacyAdmin: [
@@ -143,9 +144,9 @@ export const store = new Vuex.Store({
     signInUser(state, payload) {
       const user = payload;
       //console.log(user.password);
-      //let userName =payload.email.split('@');
+      let userName = payload.email.split('@');
       const regUser = {
-        "username": user.email,
+        "username": userName[0],
         "password": user.password,
         "firstname": user.fname,
         "lastname": user.lname,
@@ -177,9 +178,10 @@ export const store = new Vuex.Store({
             var decode = jwt_decode(response.data.accessToken)
             state.userStatus = decode.role;
             localStorage.setItem("role", decode.role)
+            console.log(decode.sub);
             axios.get('/user/username/' + decode.sub)
               .then(function (response2) {
-                state.users[0].userID = response2.data.id;
+                state.users[0].id = response2.data.id;
                 state.users[0].username = response2.data.username;
                 state.users[0].fname = response2.data.firstName;
                 state.users[0].lname = response2.data.lastName;

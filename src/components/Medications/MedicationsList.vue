@@ -15,9 +15,10 @@
                 <i class="fas fa-search"></i>
               </button>
             </div>
+
             <table
               class="list-table"
-              style="width: 80%; background-color: white; margin-top: 24px"
+              style="width: 100%; background-color: white; margin-top: 24px"
             >
               <tr>
                 <th>Šifra Leka</th>
@@ -25,29 +26,21 @@
                 <th>Tip leka</th>
                 <th>Kontraindikacije</th>
                 <th>Sastav</th>
-                <th>Preporučeni unos</th>
-                <th>Zamenski lek</th>
-                <th>Lokacije</th>
+                <th>Proizvodjac</th>
+                <th>Cena</th>
               </tr>
               <tr
                 class="container__list-item"
-                v-for="(item, index) in medications"
+                v-for="(item, index) in apiMedication"
                 :key="index"
               >
-                <td>{{ item.id }}</td>
+                <td>{{ item.code }}</td>
                 <td>{{ item.name }}</td>
-                <td>
-                  <i
-                    class="fas fa-certificate"
-                    v-if="item.type == 'antidepresiv'"
-                  ></i
-                  >{{ item.type }}
-                </td>
-                <td>{{ item.contraindications }}</td>
-                <td>{{ item.contains }}</td>
-                <td>{{ item.dailyDoes }}</td>
-                <td>{{ item.substitue }}</td>
-                <td>{{ item.location }}</td>
+                <td>{{ item.type }}</td>
+                <td>{{ item.sideEffects }}</td>
+                <td>{{ item.ingredients }}</td>
+                <td>{{ item.manufacturer.name }}</td>
+                <td>{{ item.currentPrice }}</td>
               </tr>
             </table>
           </div>
@@ -59,10 +52,21 @@
 
 <script>
 export default {
+  data: () => ({
+    apiMedication: {},
+  }),
   computed: {
-    medications() {
-      return this.$store.state.medications;
-    },
+    // medications() {
+    //   return this.$store.state.medications;
+    // },
+  },
+  mounted: function () {
+    //PREPRAVITI PORTOVE
+    fetch("http://localhost:8081/api/medication/all")
+      .then((response) => response.json())
+      .then((data) => {
+        this.apiMedication = data;
+      });
   },
 };
 </script>
